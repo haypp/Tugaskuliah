@@ -7,14 +7,26 @@ package grosirin;
 
 import java.awt.CardLayout;
 import java.awt.Image;
+import java.awt.Toolkit;
+import java.io.File;
+import java.sql.*;
 import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import org.apache.commons.io.FileUtils;
 
 /**
  *
  * @author mainw
  */
 public class RegisterPage extends javax.swing.JFrame {
-
+    String jk, alamatLengkap, fullname, username, password, tglLahir, notelp;
+    Connection con;
+    PreparedStatement pst;
+    Statement stm;
+    ResultSet rs;
+    JFileChooser jfc;
+    File file;
     /**
      * Creates new form RegisterPage
      */
@@ -45,13 +57,18 @@ public class RegisterPage extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         txtTanggalLahir = new javax.swing.JTextField();
+        jLabel12 = new javax.swing.JLabel();
+        rdLaki = new javax.swing.JRadioButton();
+        rdPerempuan = new javax.swing.JRadioButton();
+        jLabel13 = new javax.swing.JLabel();
+        txtnotelp = new javax.swing.JTextField();
         btnBack = new javax.swing.JButton();
         btnNext = new javax.swing.JButton();
         step2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         lbImageIcon1 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        txtKota = new javax.swing.JTextField();
+        txtAlamat = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         txtKecamatan = new javax.swing.JTextField();
@@ -68,7 +85,7 @@ public class RegisterPage extends javax.swing.JFrame {
         lbImageFP = new javax.swing.JLabel();
         btnPilih = new javax.swing.JButton();
         btnBackSt3 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        btnConfirm = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1366, 768));
@@ -76,6 +93,10 @@ public class RegisterPage extends javax.swing.JFrame {
         setSize(new java.awt.Dimension(1366, 768));
 
         root.setLayout(new java.awt.CardLayout());
+
+        step1.setMaximumSize(new java.awt.Dimension(1366, 768));
+        step1.setMinimumSize(new java.awt.Dimension(1366, 768));
+        step1.setPreferredSize(new java.awt.Dimension(1366, 768));
 
         jPanel2.setBackground(new java.awt.Color(106, 138, 240));
 
@@ -107,10 +128,36 @@ public class RegisterPage extends javax.swing.JFrame {
         });
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel4.setText("Password");
+        jLabel4.setText("No Telephone");
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel11.setText("Tanggal Lahir");
+
+        txtTanggalLahir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTanggalLahirActionPerformed(evt);
+            }
+        });
+
+        jLabel12.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel12.setText("Jenis Kelamin");
+
+        rdLaki.setBackground(new java.awt.Color(106, 138, 240));
+        rdLaki.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        rdLaki.setText("Laki - Laki");
+
+        rdPerempuan.setBackground(new java.awt.Color(106, 138, 240));
+        rdPerempuan.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        rdPerempuan.setText("Perempuan");
+
+        jLabel13.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel13.setText("Password");
+
+        txtnotelp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtnotelpActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -120,27 +167,37 @@ public class RegisterPage extends javax.swing.JFrame {
                 .addGap(63, 63, 63)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel11)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(txtFullname, javax.swing.GroupLayout.PREFERRED_SIZE, 555, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 555, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(81, 81, 81))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(8, 8, 8)
+                                .addComponent(lbImageIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(226, 226, 226)
+                                .addComponent(jLabel1))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2)
-                                    .addComponent(txtFullname, javax.swing.GroupLayout.PREFERRED_SIZE, 555, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(txtTanggalLahir, javax.swing.GroupLayout.PREFERRED_SIZE, 555, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(rdLaki)
+                                        .addGap(38, 38, 38)
+                                        .addComponent(rdPerempuan))
+                                    .addComponent(jLabel12)
+                                    .addComponent(jLabel11))
+                                .addGap(112, 112, 112)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 572, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel3)))
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(txtTanggalLahir, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 1237, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(txtPassword, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                                    .addComponent(lbImageIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(218, 218, 218)
-                                    .addComponent(jLabel1))))
-                        .addGap(66, 66, 66))))
+                                    .addComponent(jLabel13)
+                                    .addComponent(jLabel4)
+                                    .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 555, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtnotelp, javax.swing.GroupLayout.PREFERRED_SIZE, 555, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addContainerGap(81, Short.MAX_VALUE))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -151,7 +208,7 @@ public class RegisterPage extends javax.swing.JFrame {
                         .addGap(18, 18, 18))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addGap(73, 73, 73)))
+                        .addGap(70, 70, 70)))
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jLabel3))
@@ -159,15 +216,28 @@ public class RegisterPage extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtFullname, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(34, 34, 34)
-                .addComponent(jLabel11)
-                .addGap(33, 33, 33)
-                .addComponent(txtTanggalLahir, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(50, 50, 50)
-                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel11)
+                    .addComponent(jLabel13))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtTanggalLahir, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(70, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel12)
+                    .addComponent(jLabel4))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(29, 29, 29)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(rdLaki)
+                            .addComponent(rdPerempuan)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtnotelp, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(85, Short.MAX_VALUE))
         );
 
         btnBack.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -202,7 +272,7 @@ public class RegisterPage extends javax.swing.JFrame {
             step1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(step1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 84, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 120, Short.MAX_VALUE)
                 .addGroup(step1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnNext, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -216,9 +286,9 @@ public class RegisterPage extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         jLabel5.setText("Register Page");
 
-        txtKota.addActionListener(new java.awt.event.ActionListener() {
+        txtAlamat.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtKotaActionPerformed(evt);
+                txtAlamatActionPerformed(evt);
             }
         });
 
@@ -255,7 +325,7 @@ public class RegisterPage extends javax.swing.JFrame {
                     .addComponent(jLabel7)
                     .addComponent(txtKecamatan, javax.swing.GroupLayout.PREFERRED_SIZE, 1237, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6)
-                    .addComponent(txtKota, javax.swing.GroupLayout.PREFERRED_SIZE, 1237, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtAlamat, javax.swing.GroupLayout.PREFERRED_SIZE, 1237, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(lbImageIcon1, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(226, 226, 226)
@@ -273,7 +343,7 @@ public class RegisterPage extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel6)
                 .addGap(18, 18, 18)
-                .addComponent(txtKota, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtAlamat, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(40, 40, 40)
                 .addComponent(jLabel7)
                 .addGap(18, 18, 18)
@@ -344,8 +414,15 @@ public class RegisterPage extends javax.swing.JFrame {
             }
         });
 
+        lbImageFP.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+
         btnPilih.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnPilih.setText("Pilih");
+        btnPilih.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPilihActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -397,8 +474,13 @@ public class RegisterPage extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jButton1.setText("Confirm");
+        btnConfirm.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        btnConfirm.setText("Confirm");
+        btnConfirm.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConfirmActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout step3Layout = new javax.swing.GroupLayout(step3);
         step3.setLayout(step3Layout);
@@ -409,8 +491,8 @@ public class RegisterPage extends javax.swing.JFrame {
                 .addGap(64, 64, 64)
                 .addComponent(btnBackSt3, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(103, 103, 103))
+                .addComponent(btnConfirm, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(80, 80, 80))
         );
         step3Layout.setVerticalGroup(
             step3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -419,7 +501,7 @@ public class RegisterPage extends javax.swing.JFrame {
                 .addGap(46, 46, 46)
                 .addGroup(step3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnBackSt3, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnConfirm, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 44, Short.MAX_VALUE))
         );
 
@@ -468,12 +550,25 @@ public class RegisterPage extends javax.swing.JFrame {
     private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
         // TODO add your handling code here:
         CardLayout cl = (CardLayout) root.getLayout();
+        fullname = txtFullname.getText();
+        username = txtUsername.getText();
+        password = txtPassword.getText();
+        tglLahir = txtTanggalLahir.getText();
+        notelp = txtnotelp.getText();
+        if(rdLaki.isSelected())
+        {
+            jk = "Laki-Laki";
+        }
+        if(rdPerempuan.isSelected())
+        {
+            jk = "Perempuan";
+        }
         cl.show(root,"step2");
     }//GEN-LAST:event_btnNextActionPerformed
 
-    private void txtKotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtKotaActionPerformed
+    private void txtAlamatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAlamatActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtKotaActionPerformed
+    }//GEN-LAST:event_txtAlamatActionPerformed
 
     private void txtKecamatanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtKecamatanActionPerformed
         // TODO add your handling code here:
@@ -496,6 +591,11 @@ public class RegisterPage extends javax.swing.JFrame {
     private void btnNextSt2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextSt2ActionPerformed
         // TODO add your handling code here:
         CardLayout cl = (CardLayout) root.getLayout();
+        String alamat,kecamatan,kodepos;
+        alamat = txtAlamat.getText();
+        kecamatan = txtKecamatan.getText();
+        kodepos = txtKodePos.getText();
+        alamatLengkap = alamat+","+kecamatan+","+kodepos;
         cl.show(root,"step3");
     }//GEN-LAST:event_btnNextSt2ActionPerformed
 
@@ -511,6 +611,54 @@ public class RegisterPage extends javax.swing.JFrame {
         LoginPage lp = new LoginPage();
         lp.setVisible(true);
     }//GEN-LAST:event_btnBackActionPerformed
+
+    private void txtTanggalLahirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTanggalLahirActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTanggalLahirActionPerformed
+
+    private void btnConfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmActionPerformed
+        // TODO add your handling code here:
+        String sql="insert into user(namaUser, username, jenisKelamin, alamat, notelp, tglLahir, password, photopath, userLevel) values (?,?,?,?,?,?,?,?,?)";
+        try {
+            con = Koneksi.configDB();
+            pst = con.prepareStatement(sql);
+            pst.setString(1, fullname);
+            pst.setString(2, username);
+            pst.setString(3, jk);
+            pst.setString(4, alamatLengkap);
+            pst.setString(5, notelp);
+            pst.setString(6, tglLahir);
+            pst.setString(7, password);
+            pst.setString(8, txtImageName.getText());
+            pst.setInt(9, 2);
+            pst.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Berhasil input data");
+            String path = new File(".").getCanonicalPath();
+            FileUtils.copyFileToDirectory(file, new File(path+"/image"));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }//GEN-LAST:event_btnConfirmActionPerformed
+
+    private void btnPilihActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPilihActionPerformed
+        // TODO add your handling code here:
+        jfc = new JFileChooser();
+        if (jfc.showOpenDialog(lbImageFP) == JFileChooser.APPROVE_OPTION)
+        {
+            Toolkit tk = Toolkit.getDefaultToolkit();
+            Image img = tk.getImage(jfc.getSelectedFile().getAbsolutePath());
+            Image imgRsz = img.getScaledInstance(lbImageFP.getWidth(), lbImageFP.getHeight(), Image.SCALE_DEFAULT);
+            ImageIcon imgIcon = new ImageIcon(imgRsz);
+            
+            lbImageFP.setIcon(imgIcon);
+            txtImageName.setText(jfc.getSelectedFile().getName());
+            file = new File(jfc.getSelectedFile().getPath());
+        }
+    }//GEN-LAST:event_btnPilihActionPerformed
+
+    private void txtnotelpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtnotelpActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtnotelpActionPerformed
 
     /**
      * @param args the command line arguments
@@ -552,13 +700,15 @@ public class RegisterPage extends javax.swing.JFrame {
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnBackSt2;
     private javax.swing.JButton btnBackSt3;
+    private javax.swing.JButton btnConfirm;
     private javax.swing.JButton btnNext;
     private javax.swing.JButton btnNextSt2;
     private javax.swing.JButton btnPilih;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -574,17 +724,20 @@ public class RegisterPage extends javax.swing.JFrame {
     private javax.swing.JLabel lbImageIcon;
     private javax.swing.JLabel lbImageIcon1;
     private javax.swing.JLabel lbImageIcon2;
+    private javax.swing.JRadioButton rdLaki;
+    private javax.swing.JRadioButton rdPerempuan;
     private javax.swing.JPanel root;
     private javax.swing.JPanel step1;
     private javax.swing.JPanel step2;
     private javax.swing.JPanel step3;
+    private javax.swing.JTextField txtAlamat;
     private javax.swing.JTextField txtFullname;
     private javax.swing.JTextField txtImageName;
     private javax.swing.JTextField txtKecamatan;
     private javax.swing.JTextField txtKodePos;
-    private javax.swing.JTextField txtKota;
     private javax.swing.JTextField txtPassword;
     private javax.swing.JTextField txtTanggalLahir;
     private javax.swing.JTextField txtUsername;
+    private javax.swing.JTextField txtnotelp;
     // End of variables declaration//GEN-END:variables
 }
