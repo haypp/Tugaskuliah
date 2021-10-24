@@ -69,6 +69,7 @@ public class viewbarang extends javax.swing.JFrame {
         lbimage = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(255, 255, 255));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowActivated(java.awt.event.WindowEvent evt) {
                 formWindowActivated(evt);
@@ -81,6 +82,7 @@ public class viewbarang extends javax.swing.JFrame {
         lbharga.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lbharga.setText("25000");
 
+        jButton10.setBackground(new java.awt.Color(255, 255, 255));
         jButton10.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jButton10.setText("Back");
         jButton10.addActionListener(new java.awt.event.ActionListener() {
@@ -92,6 +94,7 @@ public class viewbarang extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel5.setText("Atur Jumlah catatan");
 
+        jButton12.setBackground(new java.awt.Color(255, 255, 255));
         jButton12.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jButton12.setText("-");
         jButton12.addActionListener(new java.awt.event.ActionListener() {
@@ -100,6 +103,7 @@ public class viewbarang extends javax.swing.JFrame {
             }
         });
 
+        jButton13.setBackground(new java.awt.Color(255, 255, 255));
         jButton13.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jButton13.setText("+");
         jButton13.addActionListener(new java.awt.event.ActionListener() {
@@ -127,6 +131,7 @@ public class viewbarang extends javax.swing.JFrame {
         jTextArea1.setText("Totam dolorem molestiae \nadipisci reiciendis sunt enim.\nConsectetur consequatur \nplaceat facere ex voluptatum \nperspiciatis. Esse numquam \nqui reiciendis et incidunt \nid quas porro.");
         jScrollPane1.setViewportView(jTextArea1);
 
+        btntambah.setBackground(new java.awt.Color(255, 255, 255));
         btntambah.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         btntambah.setText("Tambahkan");
         btntambah.addActionListener(new java.awt.event.ActionListener() {
@@ -135,6 +140,7 @@ public class viewbarang extends javax.swing.JFrame {
             }
         });
 
+        jButton11.setBackground(new java.awt.Color(255, 255, 255));
         jButton11.setText("keranjang");
         jButton11.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -308,7 +314,7 @@ public class viewbarang extends javax.swing.JFrame {
                             .addComponent(jButton17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton18, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 217, Short.MAX_VALUE)
                         .addComponent(jLabel1)
                         .addGap(201, 201, 201)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
