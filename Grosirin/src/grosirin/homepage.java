@@ -38,7 +38,7 @@ public class homepage extends javax.swing.JFrame {
                     try {
                         Toolkit toolkit=Toolkit.getDefaultToolkit();
                         String path=new File(".").getCanonicalPath();
-                        Image image=toolkit.getImage(path+"/src/Image/"+tmtpoto); 
+                        Image image=toolkit.getImage(path+"/src/Image/barang/"+tmtpoto); 
                         Image imagedResized=image.getScaledInstance(gb1.getWidth(), gb1.getHeight(), Image.SCALE_DEFAULT);
                         ImageIcon icon=new ImageIcon(imagedResized);
                         gb1.setIcon(icon); 
@@ -53,7 +53,7 @@ public class homepage extends javax.swing.JFrame {
                     try {
                         Toolkit toolkit=Toolkit.getDefaultToolkit();
                         String path=new File(".").getCanonicalPath();
-                        Image image=toolkit.getImage(path+"/src/Image/"+tmtpoto); 
+                        Image image=toolkit.getImage(path+"/src/Image/barang/"+tmtpoto); 
                         Image imagedResized=image.getScaledInstance(gb2.getWidth(), gb2.getHeight(), Image.SCALE_DEFAULT);
                         ImageIcon icon=new ImageIcon(imagedResized);
                         gb2.setIcon(icon); 
@@ -68,7 +68,7 @@ public class homepage extends javax.swing.JFrame {
                     try {
                         Toolkit toolkit=Toolkit.getDefaultToolkit();
                         String path=new File(".").getCanonicalPath();
-                        Image image=toolkit.getImage(path+"/src/Image/"+tmtpoto); 
+                        Image image=toolkit.getImage(path+"/src/Image/barang/"+tmtpoto); 
                         Image imagedResized=image.getScaledInstance(gb3.getWidth(), gb3.getHeight(), Image.SCALE_DEFAULT);
                         ImageIcon icon=new ImageIcon(imagedResized);
                         gb3.setIcon(icon); 
@@ -80,6 +80,9 @@ public class homepage extends javax.swing.JFrame {
         }
     }
     
+    public void setgloballist(String angka){
+    GlobalList = angka;
+    }
     public void setIconImage()
     {
        Image img = new ImageIcon("src\\image\\iconlogo.png").getImage();
@@ -98,7 +101,7 @@ public class homepage extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
-        tb1 = new javax.swing.JButton();
+        javax.swing.JButton tb1 = new javax.swing.JButton();
         tb2 = new javax.swing.JButton();
         tb3 = new javax.swing.JButton();
         tb4 = new javax.swing.JButton();
@@ -182,6 +185,11 @@ public class homepage extends javax.swing.JFrame {
         tb1.setText("MINYAK");
         tb1.setBorder(null);
         tb1.setPreferredSize(new java.awt.Dimension(143, 40));
+        tb1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tb1MouseClicked(evt);
+            }
+        });
         tb1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tb1ActionPerformed(evt);
@@ -479,9 +487,16 @@ public class homepage extends javax.swing.JFrame {
     }//GEN-LAST:event_tb2ActionPerformed
 
     private void tb1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tb1ActionPerformed
-        GlobalList = "minyak";
-     
+        
     }//GEN-LAST:event_tb1ActionPerformed
+
+    private void tb1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tb1MouseClicked
+        GlobalList = "4";
+        System.out.println("TES barang" + GlobalList);
+        this.dispose();
+        listbarang hp = new listbarang();
+        hp.setVisible(true);
+    }//GEN-LAST:event_tb1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -539,7 +554,6 @@ public class homepage extends javax.swing.JFrame {
     private javax.swing.JLabel lbNama1;
     private javax.swing.JLabel lbNama2;
     private javax.swing.JLabel lbNama3;
-    private javax.swing.JButton tb1;
     private javax.swing.JButton tb2;
     private javax.swing.JButton tb3;
     private javax.swing.JButton tb4;
