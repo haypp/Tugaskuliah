@@ -7,7 +7,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 
 public class homepage extends javax.swing.JFrame {
-        public String GlobalBarang,barang1,barang2,barang3,GlobalList;
+        public String GlobalBarang,barang1,barang2,barang3;
+        public static String GlobalList;
         Connection con;
         PreparedStatement pst;
         Statement stm;

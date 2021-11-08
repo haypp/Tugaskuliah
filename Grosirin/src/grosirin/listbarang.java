@@ -38,7 +38,7 @@ public class listbarang extends javax.swing.JFrame {
    
    public void settitlebarnag(){
        homepage hp = new homepage();
-       String barang = hp.GlobalList ;
+       String barang = homepage.GlobalList ;
        
        try {        
             String sql = "select namaBarang, harga, photopath,idBarang from barang where idJenisBarang ="+  barang;
@@ -56,7 +56,7 @@ public class listbarang extends javax.swing.JFrame {
    public void setbarang(){
        System.out.println("TES barang");
        homepage hp = new homepage();
-       String barang = hp.GlobalList;
+       String barang = homepage.GlobalList;
        System.out.println("TES barang" + barang);
        
        try {        

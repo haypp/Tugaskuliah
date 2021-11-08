@@ -21,6 +21,7 @@ import javax.swing.ImageIcon;
  */
 public class viewbarang extends javax.swing.JFrame {
     public String globalbarang,barang1;
+    public static String namaBarang, total, jumlah;
     Connection con;
     PreparedStatement pst;
     Statement stm;
@@ -396,6 +397,14 @@ public class viewbarang extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton15ActionPerformed
 
     private void btntambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btntambahActionPerformed
+        String barang = lbnama.getText();
+        String total1 = txtotal.getText();
+        String jumlah1 = txjumlah.getText();
+        namaBarang = barang;
+        total = total1;
+        jumlah = jumlah1;
+        System.out.println(namaBarang + total + jumlah);
+        System.out.print(namaBarang);
         this.dispose();
         cart hp = new cart();
         hp.setVisible(true);
