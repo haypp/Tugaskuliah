@@ -37,7 +37,7 @@ public class viewbarang extends javax.swing.JFrame {
     private void load(){
         String barang = homepage.GlobalBarang;
         try {
-            String sql = "select namabarang,harga,photopath from barang where idbarang = "+barang;
+            String sql = "select namabarang,harga,photopath,detail from barang where idbarang = "+barang;
             con = Koneksi.configDB();
             stm = con.createStatement();
             rs = stm.executeQuery(sql);
@@ -47,6 +47,7 @@ public class viewbarang extends javax.swing.JFrame {
                 lbnama.setText (rs.getString("namaBarang"));
                 lbharga.setText (rs.getString("harga"));
                 txtotal.setText(rs.getString("harga"));
+                txdetail.setText(rs.getString("detail"));
                 tmtpoto = rs.getString("photopath");
                 barang1 = rs.getString("idBarang");
                 
@@ -93,7 +94,7 @@ public class viewbarang extends javax.swing.JFrame {
         lbharga = new javax.swing.JLabel();
         lbgambar = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        txdetail = new javax.swing.JTextArea();
         jButton15 = new javax.swing.JButton();
         btntambah = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
@@ -147,11 +148,11 @@ public class viewbarang extends javax.swing.JFrame {
 
         lbgambar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setFont(new java.awt.Font("Monospaced", 0, 14)); // NOI18N
-        jTextArea1.setRows(5);
-        jTextArea1.setText("Bimoli (Bitung Manado Oil Limited)\n\n\nBimoli kemasan \t: 1 Liter\nTerbuat dari\t: 100% Kelapa Sawit\nDi produksi \t: PT.Salim Ivomas Pratama Tbk(SIMP)\nProduct By  \t: grup PT.Indofood Sukses Makmur Tbk &\n\t      \tPT.Indofood Agri Resources Ltd(IndoAgri).");
-        jScrollPane1.setViewportView(jTextArea1);
+        txdetail.setColumns(20);
+        txdetail.setFont(new java.awt.Font("Monospaced", 0, 14)); // NOI18N
+        txdetail.setRows(5);
+        txdetail.setText("Bimoli (Bitung Manado Oil Limited)\n\n\nBimoli kemasan \t: 1 Liter\nTerbuat dari\t: 100% Kelapa Sawit\nDi produksi \t: PT.Salim Ivomas Pratama Tbk(SIMP)\nProduct By  \t: grup PT.Indofood Sukses Makmur Tbk &\n\t      \tPT.Indofood Agri Resources Ltd(IndoAgri).");
+        jScrollPane1.setViewportView(txdetail);
 
         jButton15.setBackground(new java.awt.Color(204, 204, 204));
         jButton15.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
@@ -543,7 +544,6 @@ public class viewbarang extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel lbgambar;
     private javax.swing.JLabel lbharga;
@@ -553,6 +553,7 @@ public class viewbarang extends javax.swing.JFrame {
     private javax.swing.JButton tb3;
     private javax.swing.JButton tb4;
     private javax.swing.JButton tb5;
+    private javax.swing.JTextArea txdetail;
     private javax.swing.JTextField txjumlah;
     private javax.swing.JTextField txtotal;
     // End of variables declaration//GEN-END:variables
