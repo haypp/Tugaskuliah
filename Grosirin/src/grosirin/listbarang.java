@@ -7,7 +7,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 
 public class listbarang extends javax.swing.JFrame {
-    public String GlobalBarang,barang1,barang2,barang3,barang4,barang5;
+    public String barang1,barang2,barang3,barang4,barang5;
     Connection con;
     PreparedStatement pst;
     Statement stm;
@@ -37,11 +37,9 @@ public class listbarang extends javax.swing.JFrame {
     }
    
    public void settitlebarnag(){
-       homepage hp = new homepage();
        String barang = homepage.GlobalList ;
-       
        try {        
-            String sql = "select namaBarang, harga, photopath,idBarang from barang where idJenisBarang ="+  barang;
+            String sql = "select namajenis from jenisbarang where idJenisBarang ="+  barang;
             con = Koneksi.configDB();
             stm = con.createStatement();
             rs = stm.executeQuery(sql);
@@ -49,16 +47,14 @@ public class listbarang extends javax.swing.JFrame {
                 while(rs.next()){
                     
                 }
+                rs.absolute(1);
+                lbJenis.setText (rs.getString("namaJenis"));
        }catch (Exception e) {
             System.out.println(e.getMessage());
         }
    }
    public void setbarang(){
-       System.out.println("TES barang");
-       homepage hp = new homepage();
        String barang = homepage.GlobalList;
-       System.out.println("TES barang" + barang);
-       
        try {        
             String sql = "select namaBarang, harga, photopath,idBarang from barang where idJenisBarang ="+  barang;
             con = Koneksi.configDB();
@@ -154,14 +150,7 @@ public class listbarang extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         btCart = new javax.swing.JButton();
-        tb4 = new javax.swing.JButton();
-        tb1 = new javax.swing.JButton();
-        tb7 = new javax.swing.JButton();
-        tb6 = new javax.swing.JButton();
-        tb3 = new javax.swing.JButton();
         jTextField1 = new javax.swing.JTextField();
-        tb5 = new javax.swing.JButton();
-        tb2 = new javax.swing.JButton();
         lbImage = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
@@ -185,6 +174,11 @@ public class listbarang extends javax.swing.JFrame {
         lbHarga5 = new javax.swing.JLabel();
         gb5 = new javax.swing.JButton();
         lbJenis = new javax.swing.JLabel();
+        javax.swing.JButton tb1 = new javax.swing.JButton();
+        tb2 = new javax.swing.JButton();
+        tb3 = new javax.swing.JButton();
+        tb4 = new javax.swing.JButton();
+        tb5 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -192,53 +186,12 @@ public class listbarang extends javax.swing.JFrame {
 
         btCart.setFont(new java.awt.Font("Tahoma", 0, 8)); // NOI18N
 
-        tb4.setBackground(new java.awt.Color(255, 255, 255));
-        tb4.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        tb4.setText("MINYAK");
-        tb4.setPreferredSize(new java.awt.Dimension(143, 40));
-
-        tb1.setBackground(new java.awt.Color(255, 255, 255));
-        tb1.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        tb1.setText("MINYAK");
-        tb1.setBorder(null);
-        tb1.setPreferredSize(new java.awt.Dimension(143, 40));
-
-        tb7.setBackground(new java.awt.Color(255, 255, 255));
-        tb7.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        tb7.setText("MINYAK");
-        tb7.setPreferredSize(new java.awt.Dimension(143, 40));
-
-        tb6.setBackground(new java.awt.Color(255, 255, 255));
-        tb6.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        tb6.setText("MINYAK");
-        tb6.setPreferredSize(new java.awt.Dimension(143, 40));
-
-        tb3.setBackground(new java.awt.Color(255, 255, 255));
-        tb3.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        tb3.setText("MINYAK");
-        tb3.setPreferredSize(new java.awt.Dimension(143, 40));
-
         jTextField1.setBackground(new java.awt.Color(209, 219, 252));
         jTextField1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jTextField1.setText("  Search");
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField1ActionPerformed(evt);
-            }
-        });
-
-        tb5.setBackground(new java.awt.Color(255, 255, 255));
-        tb5.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        tb5.setText("MINYAK");
-        tb5.setPreferredSize(new java.awt.Dimension(143, 40));
-
-        tb2.setBackground(new java.awt.Color(255, 255, 255));
-        tb2.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        tb2.setText("MIE");
-        tb2.setPreferredSize(new java.awt.Dimension(143, 40));
-        tb2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tb2ActionPerformed(evt);
             }
         });
 
@@ -266,12 +219,10 @@ public class listbarang extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(ggb1, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(llbNama1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE)
-                            .addComponent(llbHarga1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(llbNama1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE)
+                        .addComponent(llbHarga1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -306,12 +257,10 @@ public class listbarang extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(gb2, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(lbNama2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE)
-                            .addComponent(lbHarga2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(lbNama2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE)
+                        .addComponent(lbHarga2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -442,15 +391,15 @@ public class listbarang extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(41, 41, 41)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(53, 53, 53)
+                .addGap(63, 63, 63)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(59, 59, 59)
+                .addGap(100, 100, 100)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(95, 95, 95)
+                .addGap(77, 77, 77)
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(57, 57, 57))
+                .addGap(33, 33, 33))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -468,6 +417,67 @@ public class listbarang extends javax.swing.JFrame {
         lbJenis.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         lbJenis.setText("Jenis");
 
+        tb1.setBackground(new java.awt.Color(255, 255, 255));
+        tb1.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        tb1.setText("MINYAK");
+        tb1.setBorder(null);
+        tb1.setPreferredSize(new java.awt.Dimension(143, 40));
+        tb1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tb1MouseClicked(evt);
+            }
+        });
+        tb1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tb1ActionPerformed(evt);
+            }
+        });
+
+        tb2.setBackground(new java.awt.Color(255, 255, 255));
+        tb2.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        tb2.setText("MIE");
+        tb2.setPreferredSize(new java.awt.Dimension(143, 40));
+        tb2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tb2MouseClicked(evt);
+            }
+        });
+        tb2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tb2ActionPerformed(evt);
+            }
+        });
+
+        tb3.setBackground(new java.awt.Color(255, 255, 255));
+        tb3.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        tb3.setText("BERAS");
+        tb3.setPreferredSize(new java.awt.Dimension(143, 40));
+        tb3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tb3MouseClicked(evt);
+            }
+        });
+
+        tb4.setBackground(new java.awt.Color(255, 255, 255));
+        tb4.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        tb4.setText("SUSU");
+        tb4.setPreferredSize(new java.awt.Dimension(143, 40));
+        tb4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tb4MouseClicked(evt);
+            }
+        });
+
+        tb5.setBackground(new java.awt.Color(255, 255, 255));
+        tb5.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        tb5.setText("ROTI");
+        tb5.setPreferredSize(new java.awt.Dimension(143, 40));
+        tb5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tb5MouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -481,28 +491,25 @@ public class listbarang extends javax.swing.JFrame {
                 .addComponent(btCart, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(58, 58, 58))
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(36, 36, 36)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(81, 81, 81)
-                        .addComponent(tb1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(36, 36, 36)
-                        .addComponent(tb2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(32, 32, 32)
-                        .addComponent(tb3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(37, 37, 37)
-                        .addComponent(tb4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(26, 26, 26)
-                        .addComponent(tb5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(27, 27, 27)
-                        .addComponent(tb6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(tb7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(lbJenis)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(36, 36, 36)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lbJenis))))
-                .addGap(69, 69, 69))
+                        .addComponent(tb1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(106, 106, 106)
+                        .addComponent(tb2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(141, 141, 141)
+                        .addComponent(tb3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(143, 143, 143)
+                        .addComponent(tb4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(100, 100, 100)
+                        .addComponent(tb5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(69, 69, 69))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -512,18 +519,16 @@ public class listbarang extends javax.swing.JFrame {
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btCart, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(lbImage, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(31, 31, 31)
+                .addGap(39, 39, 39)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tb1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(tb2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(tb3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(tb4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tb5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tb6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tb7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(26, 26, 26)
+                    .addComponent(tb5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(29, 29, 29)
                 .addComponent(lbJenis)
-                .addGap(51, 51, 51)
+                .addGap(40, 40, 40)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(54, Short.MAX_VALUE))
         );
@@ -554,32 +559,83 @@ public class listbarang extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
 
-    private void tb2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tb2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tb2ActionPerformed
-
     private void ggb1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ggb1ActionPerformed
-        GlobalBarang = barang1;
+        homepage.GlobalBarang = barang1;
         this.dispose();
         viewbarang hp = new viewbarang();
         hp.setVisible(true);
     }//GEN-LAST:event_ggb1ActionPerformed
 
     private void gb2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gb2ActionPerformed
-        // TODO add your handling code here:
+        homepage.GlobalBarang = barang2;
+        this.dispose();
+        viewbarang hp = new viewbarang();
+        hp.setVisible(true);
     }//GEN-LAST:event_gb2ActionPerformed
 
     private void gb3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gb3ActionPerformed
-        // TODO add your handling code here:
+        homepage.GlobalBarang = barang3;
+        this.dispose();
+        viewbarang hp = new viewbarang();
+        hp.setVisible(true);
     }//GEN-LAST:event_gb3ActionPerformed
 
     private void gb4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gb4ActionPerformed
-        // TODO add your handling code here:
+        homepage.GlobalBarang = barang4;
+        this.dispose();
+        viewbarang hp = new viewbarang();
+        hp.setVisible(true);
     }//GEN-LAST:event_gb4ActionPerformed
 
     private void gb5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gb5ActionPerformed
-        // TODO add your handling code here:
+        homepage.GlobalBarang = barang4;
+        this.dispose();
+        viewbarang hp = new viewbarang();
+        hp.setVisible(true);
     }//GEN-LAST:event_gb5ActionPerformed
+
+    private void tb1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tb1MouseClicked
+        homepage.GlobalList = "4";
+        this.dispose();
+        listbarang hp = new listbarang();
+        hp.setVisible(true);
+    }//GEN-LAST:event_tb1MouseClicked
+
+    private void tb1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tb1ActionPerformed
+
+    }//GEN-LAST:event_tb1ActionPerformed
+
+    private void tb2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tb2MouseClicked
+        homepage.GlobalList = "5";
+        this.dispose();
+        listbarang hp = new listbarang();
+        hp.setVisible(true);
+    }//GEN-LAST:event_tb2MouseClicked
+
+    private void tb2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tb2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tb2ActionPerformed
+
+    private void tb3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tb3MouseClicked
+        homepage.GlobalList = "3";
+        this.dispose();
+        listbarang hp = new listbarang();
+        hp.setVisible(true);
+    }//GEN-LAST:event_tb3MouseClicked
+
+    private void tb4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tb4MouseClicked
+        homepage.GlobalList = "2";
+        this.dispose();
+        listbarang hp = new listbarang();
+        hp.setVisible(true);
+    }//GEN-LAST:event_tb4MouseClicked
+
+    private void tb5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tb5MouseClicked
+        homepage.GlobalList = "1";
+        this.dispose();
+        listbarang hp = new listbarang();
+        hp.setVisible(true);
+    }//GEN-LAST:event_tb5MouseClicked
 
     /**
      * @param args the command line arguments
@@ -643,12 +699,9 @@ public class listbarang extends javax.swing.JFrame {
     private javax.swing.JLabel lbNama5;
     private javax.swing.JLabel llbHarga1;
     private javax.swing.JLabel llbNama1;
-    private javax.swing.JButton tb1;
     private javax.swing.JButton tb2;
     private javax.swing.JButton tb3;
     private javax.swing.JButton tb4;
     private javax.swing.JButton tb5;
-    private javax.swing.JButton tb6;
-    private javax.swing.JButton tb7;
     // End of variables declaration//GEN-END:variables
 }

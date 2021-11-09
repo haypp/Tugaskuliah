@@ -7,8 +7,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 
 public class homepage extends javax.swing.JFrame {
-        public String GlobalBarang,barang1,barang2,barang3;
-        public static String GlobalList;
+        public String barang1,barang2,barang3;
+        public static String GlobalList,GlobalBarang;
         Connection con;
         PreparedStatement pst;
         Statement stm;
@@ -81,9 +81,7 @@ public class homepage extends javax.swing.JFrame {
         }
     }
     
-    public void setgloballist(String angka){
-    GlobalList = angka;
-    }
+    
     public void setIconImage()
     {
        Image img = new ImageIcon("src\\image\\iconlogo.png").getImage();
@@ -107,8 +105,6 @@ public class homepage extends javax.swing.JFrame {
         tb3 = new javax.swing.JButton();
         tb4 = new javax.swing.JButton();
         tb5 = new javax.swing.JButton();
-        tb6 = new javax.swing.JButton();
-        tb7 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         gb1 = new javax.swing.JButton();
@@ -201,6 +197,11 @@ public class homepage extends javax.swing.JFrame {
         tb2.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         tb2.setText("MIE");
         tb2.setPreferredSize(new java.awt.Dimension(143, 40));
+        tb2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tb2MouseClicked(evt);
+            }
+        });
         tb2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tb2ActionPerformed(evt);
@@ -209,28 +210,33 @@ public class homepage extends javax.swing.JFrame {
 
         tb3.setBackground(new java.awt.Color(255, 255, 255));
         tb3.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        tb3.setText("MINYAK");
+        tb3.setText("BERAS");
         tb3.setPreferredSize(new java.awt.Dimension(143, 40));
+        tb3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tb3MouseClicked(evt);
+            }
+        });
 
         tb4.setBackground(new java.awt.Color(255, 255, 255));
         tb4.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        tb4.setText("MINYAK");
+        tb4.setText("SUSU");
         tb4.setPreferredSize(new java.awt.Dimension(143, 40));
+        tb4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tb4MouseClicked(evt);
+            }
+        });
 
         tb5.setBackground(new java.awt.Color(255, 255, 255));
         tb5.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        tb5.setText("MINYAK");
+        tb5.setText("ROTI");
         tb5.setPreferredSize(new java.awt.Dimension(143, 40));
-
-        tb6.setBackground(new java.awt.Color(255, 255, 255));
-        tb6.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        tb6.setText("MINYAK");
-        tb6.setPreferredSize(new java.awt.Dimension(143, 40));
-
-        tb7.setBackground(new java.awt.Color(255, 255, 255));
-        tb7.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        tb7.setText("MINYAK");
-        tb7.setPreferredSize(new java.awt.Dimension(143, 40));
+        tb5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tb5MouseClicked(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         jLabel1.setText("BEST SELLER PRODUCT");
@@ -367,40 +373,38 @@ public class homepage extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(43, 43, 43)
-                .addComponent(lbImage, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(142, 142, 142)
+                .addComponent(lbImage, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(138, 138, 138)
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 740, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(62, 62, 62))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(32, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                            .addGap(64, 64, 64)
-                            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(62, 62, 62)
-                            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                            .addGap(36, 36, 36)
-                            .addComponent(tb1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(36, 36, 36)
-                            .addComponent(tb2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(32, 32, 32)
-                            .addComponent(tb3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(37, 37, 37)
-                            .addComponent(tb4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(26, 26, 26)
-                            .addComponent(tb5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(27, 27, 27)
-                            .addComponent(tb6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, 18)
-                            .addComponent(tb7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(74, 74, 74))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(64, 64, 64)
+                                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(62, 62, 62)
+                                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(45, 45, 45)
+                                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(74, 74, 74))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(36, 36, 36)
+                        .addComponent(tb1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(106, 106, 106)
+                        .addComponent(tb2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(141, 141, 141)
+                        .addComponent(tb3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(143, 143, 143)
+                        .addComponent(tb4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(tb5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(95, 95, 95))))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(487, 487, 487)
                 .addComponent(jLabel1)
@@ -422,9 +426,7 @@ public class homepage extends javax.swing.JFrame {
                     .addComponent(tb2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(tb3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(tb4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tb5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tb6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tb7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tb5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(44, 44, 44)
                 .addComponent(jLabel1)
                 .addGap(45, 45, 45)
@@ -499,6 +501,38 @@ public class homepage extends javax.swing.JFrame {
         hp.setVisible(true);
     }//GEN-LAST:event_tb1MouseClicked
 
+    private void tb2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tb2MouseClicked
+        GlobalList = "5";
+        System.out.println("TES barang" + GlobalList);
+        this.dispose();
+        listbarang hp = new listbarang();
+        hp.setVisible(true);
+    }//GEN-LAST:event_tb2MouseClicked
+
+    private void tb3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tb3MouseClicked
+       GlobalList = "3";
+        System.out.println("TES barang" + GlobalList);
+        this.dispose();
+        listbarang hp = new listbarang();
+        hp.setVisible(true);
+    }//GEN-LAST:event_tb3MouseClicked
+
+    private void tb4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tb4MouseClicked
+        GlobalList = "2";
+        System.out.println("TES barang" + GlobalList);
+        this.dispose();
+        listbarang hp = new listbarang();
+        hp.setVisible(true);
+    }//GEN-LAST:event_tb4MouseClicked
+
+    private void tb5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tb5MouseClicked
+       GlobalList = "1";
+        System.out.println("TES barang" + GlobalList);
+        this.dispose();
+        listbarang hp = new listbarang();
+        hp.setVisible(true);
+    }//GEN-LAST:event_tb5MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -559,7 +593,5 @@ public class homepage extends javax.swing.JFrame {
     private javax.swing.JButton tb3;
     private javax.swing.JButton tb4;
     private javax.swing.JButton tb5;
-    private javax.swing.JButton tb6;
-    private javax.swing.JButton tb7;
     // End of variables declaration//GEN-END:variables
 }
