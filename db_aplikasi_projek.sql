@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 09, 2021 at 02:15 AM
+-- Generation Time: Nov 22, 2021 at 06:46 AM
 -- Server version: 10.4.18-MariaDB
 -- PHP Version: 8.0.3
 
@@ -33,39 +33,40 @@ CREATE TABLE `barang` (
   `namaBarang` varchar(255) NOT NULL,
   `harga` int(11) NOT NULL,
   `stok` int(11) NOT NULL,
-  `photopath` varchar(200) NOT NULL
+  `photopath` varchar(200) NOT NULL,
+  `detail` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `barang`
 --
 
-INSERT INTO `barang` (`idBarang`, `idJenisBarang`, `namaBarang`, `harga`, `stok`, `photopath`) VALUES
-(1, 4, 'Bimoli', 15000, 50, 'bimoli.jpg'),
-(2, 4, 'Sania', 15000, 50, 'sania.jpg'),
-(3, 4, 'Sofia', 35000, 40, 'sovia.jpg'),
-(4, 4, 'FriceWell', 25000, 30, 'fraiswell.jpg'),
-(5, 4, 'Goreng', 25000, 20, 'goreng.jpg'),
-(6, 5, 'Sedap', 3000, 50, 'sedap.jpg'),
-(7, 5, 'Indomie', 3000, 50, 'indomie.jpg'),
-(8, 5, 'Sarimie', 3000, 50, 'sarimi.jpg'),
-(9, 5, 'Samyang', 16000, 10, 'samyang.jpg'),
-(10, 5, 'Sedaap Soto', 3000, 50, 'sedapsoto.jpg'),
-(11, 2, 'Bear Brand', 12000, 58, 'bearbrand.jpg'),
-(12, 1, 'Beng-Beng', 1000, 788, 'bengbeng.jpg'),
-(13, 3, 'Sentra Wangi', 46000, 78, 'berassentrawangi.png'),
-(14, 3, 'Sumur Tujuh', 50000, 488, 'berassumurtujuh.jpg'),
-(15, 3, 'Deka Tani', 74000, 48, 'dekatani.jpg'),
-(16, 2, 'Dancow', 5000, 1788, 'dancow.jpg'),
-(17, 2, 'Indomilk', 4000, 742, 'indomilk.png'),
-(18, 3, 'KOI', 56000, 24, 'koi.jpg'),
-(19, 3, 'Lele Dumbo', 65000, 12, 'leledumbo.jpg'),
-(20, 1, 'OREO', 2000, 788, 'oreo.png'),
-(21, 1, 'Roma Kelapa', 7000, 738, 'rotiroma.png'),
-(22, 1, 'Sari Roti', 3000, 22, 'sariroti.png'),
-(23, 1, 'Sari Roti Besar', 7000, 73, 'sarirotibig.png'),
-(24, 2, 'UltraMilk', 5000, 748, 'ultramilk.png'),
-(25, 2, 'UltraMimi', 3000, 78, 'ultramimi.png');
+INSERT INTO `barang` (`idBarang`, `idJenisBarang`, `namaBarang`, `harga`, `stok`, `photopath`, `detail`) VALUES
+(1, 4, 'Bimoli', 15000, 50, 'bimoli.jpg', 'Bimoli (Bitung Manado Oil Limited)\r\n\r\nBimoli kemasan 	: 1 Liter\r\nTerbuat dari	: 100% Kelapa Sawit\r\nDi produksi 	: PT.Salim Ivomas Pratama Tbk(SIMP)\r\nProduct By  	: grup PT.Indofood Sukses Makmur Tbk &\r\n	      	PT.Indofood Agri Resources Ltd(IndoAgri).'),
+(2, 4, 'Sania', 15000, 50, 'sania.jpg', 'Sania  Minyak Nabati\r\n\r\nSania kemasan : 1 Liter\r\nTerbuat Dari  : 100% Kelapa Sawit PiLihan\r\nDi produksi   : PT Wilmar Cahaya Indonesia Tbk'),
+(3, 4, 'Sofia', 35000, 40, 'sovia.jpg', 'Sovia Minyak Goreng \r\n\r\nSovia Kemasan : 1 Liter\r\nTerbuat dari  : Kelapa Sawit Pilihan yang mengandung Vitamin A dan Vitamin D\r\nDi Produksi   : PT Jaya Utama Santikah  '),
+(4, 4, 'FriceWell', 25000, 30, 'fraiswell.jpg', 'Frais Well Minyak Goreng\r\n\r\nKemasan      : 1 Liter\r\nTerbuat dari : Kelapa Sawit Pilihan Kaya dengan Vitamin A dan Vitamin E \r\nDi Produksi  : PT Bina Karya Prima '),
+(5, 4, 'Goreng', 25000, 20, 'goreng.jpg', 'Sunco Minyak Goreng\r\n\r\nKemasan      : 1 Liter\r\nTerbuat dari : Kelapa Sawit Terbaik Dengan 2 Kali Penyaringan\r\nDi Produksi  : Musim Mas Group'),
+(6, 5, 'Sedap', 3000, 50, 'sedap.jpg', 'Mie Sedaap Goreng\r\n\r\nKemasan     : 1 Pcs\r\nDi Produksi : Wings Food\r\nProduct By  : PT Sayap Mas Utama'),
+(7, 5, 'Indomie', 3000, 50, 'indomie.jpg', 'Indomie Goreng\r\n\r\nKemasan     : 1 Pcs\r\nDi Produksi : Indofood CBP\r\nProduct By  : PT Indofood Indonesia'),
+(8, 5, 'Sarimie', 3000, 50, 'sarimi.jpg', 'Sarimie Mie Instant\r\n\r\nKemasan     : 1 Pcs\r\nDi Produksi : PT Indofood CBP Sukses Makmur Tbk\r\nProduct By  : PT Indofood'),
+(9, 5, 'Samyang', 16000, 10, 'samyang.jpg', 'Samyang Mie Instant\r\n\r\nKemasan     : 1 Pcs\r\nDi Produksi : Samyang Food, Korea Selatan\r\nProduct By  : Samyang Food'),
+(10, 5, 'Sedaap Soto', 3000, 50, 'sedapsoto.jpg', 'Sedaap Soto\r\n\r\nKemasan     : 1 Pcs\r\nDi Produksi : Wings Food\r\nProduct By  : PT Sayap Mas Utama'),
+(11, 2, 'Bear Brand', 12000, 58, 'bearbrand.jpg', 'Bear Brand \r\n\r\nKemasan     : 1 Kaleng\r\nDi Produksi : Nestle ,Swiss\r\nProduct by  : Nestle'),
+(12, 1, 'Beng-Beng', 1000, 788, 'bengbeng.jpg', 'Beng-Beng\r\n\r\nKemasan     : 1 Pcs\r\nDi Produksi : PT Mayora Indah Tbk\r\nProduct By  : PT Mayora'),
+(13, 3, 'Sentra Wangi', 46000, 78, 'berassentrawangi.png', 'Setra Wangi Beras\r\n\r\nKemasan     : 3kg\r\nDi Produksi : PT Food Station Tjipinang Jaya\r\nProduct By  : PT Food Station'),
+(14, 3, 'Sumur Tujuh', 50000, 488, 'berassumurtujuh.jpg', 'Sumur Tujuh Beras\r\n\r\nKemasan     : 5kg\r\nDi Produksi : PT Widodofood Makmur Sejahtera, PT Widodo Makmur Perkasa Tbk\r\nProduct By  : PT Widodofood '),
+(15, 3, 'Deka Tani', 74000, 48, 'dekatani.jpg', 'Deka Tani Beras\r\n\r\nKemasan         : 8kg\r\nTempat Produksi : Garut,Jawa Barat '),
+(16, 2, 'Dancow', 5000, 1788, 'dancow.jpg', 'Dancow\r\n\r\nKemasan     : 1 Pcs\r\nDi Produksi : PT Nestle Indonesia\r\nProduct By  : Nestle'),
+(17, 2, 'Indomilk', 4000, 742, 'indomilk.png', 'Indomilk \r\n\r\nKemasan     : 1 botol\r\nDi Produksi : PT Indolakto\r\nProduct By  : Indofood Nutrition'),
+(18, 3, 'KOI', 56000, 24, 'koi.jpg', 'Koi Beras\r\n\r\nKemasan     : 5kg\r\nDi Produksi : UD.JongBiru, Kediri\r\nProduct By  : PT UD.Jong Biru'),
+(19, 3, 'Lele Dumbo', 65000, 12, 'leledumbo.jpg', 'Lele Dumbo Beras\r\n\r\nKemasan     : 5kg\r\nDi produksi : PT Indo Beras Makmur\r\nProduct By  : PT Tiga Pilar Sejahtera Food Tbk '),
+(20, 1, 'OREO', 2000, 788, 'oreo.png', 'Oreo \r\n\r\nKemasan     : 1 Pcs\r\nDi Produksi : PT Mondelez Indonesia Manufacturing\r\nProduct By  : Nabisco'),
+(21, 1, 'Roma Kelapa', 7000, 738, 'rotiroma.png', 'Roma Kelapa\r\n\r\nKemasan    : 1 Pcs\r\nDiproduksi : PT Mayora Indah Tbk\r\nProduct By : PT Mayora'),
+(22, 1, 'Sari Roti', 3000, 22, 'sariroti.png', 'Sari Roti\r\n\r\nKemasan     : 1 Pcs Kecil\r\nDi Produksi : PT Nippon Indosari Corpindo\r\nProduct By  : PT Nippon'),
+(23, 1, 'Sari Roti Besar', 7000, 73, 'sarirotibig.png', 'Sari Roti \r\n\r\nKemasan     : 1 Pcs Besar\r\nDi Produksi : PT Nippon Indosari Corpindo\r\nProduct By  : PT Nippon'),
+(24, 2, 'UltraMilk', 5000, 748, 'ultramilk.png', 'Ultramilk\r\n\r\nKemasan     : 1 Gelas Karton\r\nDi Produksi : PT Sanghiang Perkasa\r\nProduct By  : Ultrajaya'),
+(25, 2, 'UltraMimi', 3000, 78, 'ultramimi.png', 'Ultramimi\r\n\r\nKemasan     : 1 Gelas Karton\r\nDi Produksi : PT Sanghiang Perkasa\r\nProduct By  : Ultrajaya');
 
 -- --------------------------------------------------------
 
