@@ -6,6 +6,10 @@
 package grosirin;
 
 import java.awt.Image;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import javax.swing.ImageIcon;
 
 /**
@@ -13,12 +17,66 @@ import javax.swing.ImageIcon;
  * @author haypp
  */
 public class Checkout extends javax.swing.JFrame {
-
+    Object data[] = new Object[5];
+    String kurir, idKurir;
+    int totalAkhir, totalBelanja;
+    Connection con;
+    PreparedStatement pst;
+    Statement stm;
+    ResultSet rs;
     /**
      * Creates new form Checkout
      */
     public Checkout() {
         initComponents();
+        load();
+    }
+    
+    
+    public void load()
+    {
+        
+        String sql = "select * from kurir Order by idKurir ASC Limit 4";
+        try {
+            con = Koneksi.configDB();
+            stm = con.createStatement();
+            rs = stm.executeQuery(sql);
+            while(rs.next())
+            {
+                rs.absolute(1);
+                rdBtn1.setText(rs.getString("namaKurir"));
+                idKurir = rs.getString("idKurir");
+                
+                rs.absolute(2);
+                rdBtn2.setText(rs.getString("namaKurir"));
+                idKurir = rs.getString("idKurir");
+                
+                rs.absolute(3);
+                rdBtn3.setText(rs.getString("namaKurir"));
+                idKurir = rs.getString("idKurir");
+                
+                rs.absolute(4);
+                rdBtn4.setText(rs.getString("namaKurir"));
+                idKurir = rs.getString("idKurir");
+            }
+                
+            
+        } catch (Exception e) {
+        }
+        
+        
+        for (int i = 0; i < viewbarang.cartItem.size(); i++)
+        {
+            System.out.print(data[0] = viewbarang.cartItem.get(i).getIdBarang());
+            System.out.print(data[0] = viewbarang.cartItem.get(i).getNamaBarang());
+            System.out.print(data[0] = viewbarang.cartItem.get(i).getTotal());
+            System.out.print(data[0] = viewbarang.cartItem.get(i).getJumlah());
+         
+        }
+        
+        lbBelanja.setText(cart.totalSemua);
+        totalBelanja = Integer.parseInt(lbBelanja.getText());
+        System.out.print(totalBelanja);
     }
 
     /**
@@ -39,10 +97,6 @@ public class Checkout extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         lbAlamat = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jRadioButton3 = new javax.swing.JRadioButton();
-        jRadioButton4 = new javax.swing.JRadioButton();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
@@ -53,6 +107,10 @@ public class Checkout extends javax.swing.JFrame {
         jButton7 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
+        rdBtn1 = new javax.swing.JRadioButton();
+        rdBtn2 = new javax.swing.JRadioButton();
+        rdBtn3 = new javax.swing.JRadioButton();
+        rdBtn4 = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -81,42 +139,6 @@ public class Checkout extends javax.swing.JFrame {
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel4.setText("Pengiriman");
-
-        jRadioButton1.setBackground(new java.awt.Color(255, 255, 255));
-        jRadioButton1.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jRadioButton1.setText("JNE");
-        jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton1ActionPerformed(evt);
-            }
-        });
-
-        jRadioButton2.setBackground(new java.awt.Color(255, 255, 255));
-        jRadioButton2.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jRadioButton2.setText("JNT");
-        jRadioButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton2ActionPerformed(evt);
-            }
-        });
-
-        jRadioButton3.setBackground(new java.awt.Color(255, 255, 255));
-        jRadioButton3.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jRadioButton3.setText("POS");
-        jRadioButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton3ActionPerformed(evt);
-            }
-        });
-
-        jRadioButton4.setBackground(new java.awt.Color(255, 255, 255));
-        jRadioButton4.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jRadioButton4.setText("TIKI");
-        jRadioButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton4ActionPerformed(evt);
-            }
-        });
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel5.setText("Rincian");
@@ -158,6 +180,34 @@ public class Checkout extends javax.swing.JFrame {
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 26)); // NOI18N
         jLabel9.setText("Rp. ");
 
+        rdBtn1.setText("jRadioButton1");
+        rdBtn1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rdBtn1MouseClicked(evt);
+            }
+        });
+
+        rdBtn2.setText("jRadioButton1");
+        rdBtn2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rdBtn2MouseClicked(evt);
+            }
+        });
+
+        rdBtn3.setText("jRadioButton2");
+        rdBtn3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rdBtn3MouseClicked(evt);
+            }
+        });
+
+        rdBtn4.setText("jRadioButton3");
+        rdBtn4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rdBtn4MouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -177,25 +227,22 @@ public class Checkout extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(107, 107, 107)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jRadioButton1)
-                                .addGap(101, 101, 101)
-                                .addComponent(jRadioButton2)
-                                .addGap(96, 96, 96)
-                                .addComponent(jRadioButton3)
-                                .addGap(111, 111, 111)
-                                .addComponent(jRadioButton4))))
+                        .addGap(84, 84, 84)
+                        .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(95, 95, 95)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(rdBtn1)
+                                .addGap(71, 71, 71)
+                                .addComponent(rdBtn2)
+                                .addGap(66, 66, 66)
+                                .addComponent(rdBtn3)
+                                .addGap(70, 70, 70)
+                                .addComponent(rdBtn4))
                             .addComponent(jLabel4)
-                            .addComponent(jLabel2)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(111, 111, 111)
-                        .addComponent(lbAlamat, javax.swing.GroupLayout.PREFERRED_SIZE, 678, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jLabel2)
+                            .addComponent(lbAlamat, javax.swing.GroupLayout.PREFERRED_SIZE, 678, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -258,11 +305,11 @@ public class Checkout extends javax.swing.JFrame {
                 .addComponent(jLabel4)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jRadioButton1)
-                    .addComponent(jRadioButton2)
-                    .addComponent(jRadioButton3)
-                    .addComponent(jRadioButton4))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                    .addComponent(rdBtn1)
+                    .addComponent(rdBtn2)
+                    .addComponent(rdBtn3)
+                    .addComponent(rdBtn4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 82, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -287,22 +334,6 @@ public class Checkout extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
 
-    private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton1ActionPerformed
-
-    private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton2ActionPerformed
-
-    private void jRadioButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton3ActionPerformed
-
-    private void jRadioButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton4ActionPerformed
-
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton7ActionPerformed
@@ -310,6 +341,38 @@ public class Checkout extends javax.swing.JFrame {
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void rdBtn1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rdBtn1MouseClicked
+        // TODO add your handling code here:
+       lbPengiriman.setText("20000");
+       String jntTarif = lbPengiriman.getText();
+       totalAkhir = Integer.parseInt(jntTarif) + totalBelanja;
+       lbTotal.setText(String.valueOf(totalAkhir));
+    }//GEN-LAST:event_rdBtn1MouseClicked
+
+    private void rdBtn2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rdBtn2MouseClicked
+        // TODO add your handling code here:
+        lbPengiriman.setText("30000");
+        String jneTarif = lbPengiriman.getText();
+        totalAkhir = Integer.parseInt(jneTarif) + totalBelanja;
+        lbTotal.setText(String.valueOf(totalAkhir));
+    }//GEN-LAST:event_rdBtn2MouseClicked
+
+    private void rdBtn3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rdBtn3MouseClicked
+        // TODO add your handling code here:
+        lbPengiriman.setText("40000");
+        String tikiTarif = lbPengiriman.getText();
+        totalAkhir = Integer.parseInt(tikiTarif) + totalBelanja;
+        lbTotal.setText(String.valueOf(totalAkhir));
+    }//GEN-LAST:event_rdBtn3MouseClicked
+
+    private void rdBtn4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rdBtn4MouseClicked
+        // TODO add your handling code here:
+        lbPengiriman.setText("50000");
+        String sicepatTarif = lbPengiriman.getText();
+        totalAkhir = Integer.parseInt(sicepatTarif) + totalBelanja;
+        lbTotal.setText(String.valueOf(totalAkhir));
+    }//GEN-LAST:event_rdBtn4MouseClicked
     public void setIconImage()
     {
        Image img = new ImageIcon("src\\image\\iconlogo.png").getImage();
@@ -366,15 +429,15 @@ public class Checkout extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JRadioButton jRadioButton3;
-    private javax.swing.JRadioButton jRadioButton4;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel lbAlamat;
     private javax.swing.JLabel lbBelanja;
     private javax.swing.JLabel lbImage;
     private javax.swing.JLabel lbPengiriman;
     private javax.swing.JLabel lbTotal;
+    private javax.swing.JRadioButton rdBtn1;
+    private javax.swing.JRadioButton rdBtn2;
+    private javax.swing.JRadioButton rdBtn3;
+    private javax.swing.JRadioButton rdBtn4;
     // End of variables declaration//GEN-END:variables
 }

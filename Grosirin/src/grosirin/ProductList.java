@@ -12,15 +12,38 @@ package grosirin;
 public class ProductList {
     private String namabarang;
     private String jumlah;
+    private String idBarang;
     private String total;
+    private String tmpPhoto;
     
-    
-    public ProductList(String namabarang, String jumlah, String total)
+    public ProductList(String namabarang, String jumlah, String total, String idBarang)
     {
         this.namabarang = namabarang;
         this.jumlah = jumlah;
         this.total = total;
-        
+        this.idBarang = idBarang;
+    }
+    
+    
+    
+//    public void settmpPhoto(String tmpPhoto)
+//    {
+//        this.tmpPhoto = tmpPhoto;
+//    }
+//    
+//    public String gettmpPhoto()
+//    {
+//        return tmpPhoto;
+//    }
+    
+    public void setIdBarang(String idBarang)
+    {
+        this.idBarang = idBarang;
+    }
+    
+    public String getIdBarang()
+    {
+        return idBarang;
     }
     
     public String getNamaBarang()

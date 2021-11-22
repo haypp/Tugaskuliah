@@ -179,9 +179,12 @@ ResultSet rs;
             {
                 if(rs.getString("userLevel").equals("2"))
                 {
+                    String id = rs.getString("idUser");
                     JOptionPane.showMessageDialog(null, "Berhasil Login");
                     this.dispose();
                     homepage hp = new homepage();
+                    homepage.lbIdUser.setText(id);
+//                    homepage.lbIdUser.setVisible(false);
                     hp.setVisible(true);
                 }
             }

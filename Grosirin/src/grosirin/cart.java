@@ -5,6 +5,7 @@
  */
 package grosirin;
 
+import java.awt.Toolkit;
 import java.util.*;
 import javafx.scene.control.RadioButton;
 import javax.swing.JButton;
@@ -12,6 +13,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import java.io.*;
+import java.awt.Image;
+import javax.swing.ImageIcon;
+import javax.swing.table.DefaultTableCellRenderer;
 
 /**
  *
@@ -19,7 +24,9 @@ import javax.swing.table.TableModel;
  */
 public class cart extends javax.swing.JFrame {
 
-    static Object[] data = new Object[4];   
+    Object data[] = new Object[4];   
+    public static String totalSemua;
+    static int total;
     
     /**
      * Creates new form cart
@@ -29,9 +36,6 @@ public class cart extends javax.swing.JFrame {
         load();
     }
 
-    private JPanel panel;
-    private JButton plus, minus;
-    private JLabel labelJumlah, labelNamaBarang, labelTotal;
     
     
     /**
@@ -47,10 +51,12 @@ public class cart extends javax.swing.JFrame {
         jTextField1 = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jButton7 = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
+        btnBayar = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         cartItemTable = new javax.swing.JTable();
+        jLabel2 = new javax.swing.JLabel();
+        lbTotalPrice = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -77,11 +83,11 @@ public class cart extends javax.swing.JFrame {
             }
         });
 
-        jButton8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton8.setText("BAYAR");
-        jButton8.addActionListener(new java.awt.event.ActionListener() {
+        btnBayar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnBayar.setText("BAYAR");
+        btnBayar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton8ActionPerformed(evt);
+                btnBayarActionPerformed(evt);
             }
         });
 
@@ -96,39 +102,60 @@ public class cart extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        cartItemTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cartItemTableMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(cartItemTable);
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1171, Short.MAX_VALUE)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 491, Short.MAX_VALUE)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel2.setText("Total");
+
+        lbTotalPrice.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lbTotalPrice.setText("jLabel3");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addGap(18, 18, 18)
+                .addComponent(lbTotalPrice)
+                .addGap(254, 254, 254))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGap(256, 256, 256)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 740, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                            .addGap(45, 45, 45)
-                            .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(840, 840, 840)
-                            .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGap(46, 46, 46)
-                            .addComponent(jLabel1))))
-                .addContainerGap(129, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(256, 256, 256)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 740, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(46, 46, 46)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(45, 45, 45)
+                        .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(840, 840, 840)
+                        .addComponent(btnBayar, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(154, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -137,11 +164,15 @@ public class cart extends javax.swing.JFrame {
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(29, 29, 29)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                .addGap(69, 69, 69)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2)
+                    .addComponent(lbTotalPrice))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnBayar, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(79, 79, 79))
         );
@@ -150,10 +181,7 @@ public class cart extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -166,37 +194,30 @@ public class cart extends javax.swing.JFrame {
     public void load()
     {
         
-        
-//        DefaultTableModel model =  (DefaultTableModel) cartItemTable.getModel();
-//        model.setRowCount(0);
+        DefaultTableModel model =  (DefaultTableModel) cartItemTable.getModel();
+        model.setColumnCount(0);
+        model.addColumn("Id Barang");
+        model.addColumn("Nama Barang");
+        model.addColumn("Sub Total");
+        model.addColumn("Jumlah");
+        model.setRowCount(0);
+        total = 0;
+        totalSemua = "";
         
         
         for(int i = 0; i < viewbarang.cartItem.size(); i++)
         {
-//            data[0] = viewbarang.cartItem.get(i).getNamaBarang();
-//            data[1] = viewbarang.cartItem.get(i).getJumlah();
-//            data[2] = viewbarang.cartItem.get(i).getTotal();
             
-            labelNamaBarang = new JLabel(viewbarang.cartItem.get(i).getNamaBarang());
-            labelTotal = new JLabel(viewbarang.cartItem.get(i).getTotal());
-            labelJumlah = new JLabel(viewbarang.cartItem.get(i).getJumlah());
+            data[0] = viewbarang.cartItem.get(i).getIdBarang();
+            data[1] = viewbarang.cartItem.get(i).getNamaBarang();
+            data[2] = viewbarang.cartItem.get(i).getTotal();
+            data[3] = viewbarang.cartItem.get(i).getJumlah();
+            model.addRow(data);
+            cartItemTable.setRowHeight(20);
+            total+= Integer.parseInt(cartItemTable.getValueAt(i, 2)+"");
             
-            plus = new JButton("+");
-            minus = new JButton("-");
-            
-            panel = new JPanel();
-            panel.add(labelNamaBarang);
-            panel.add(labelTotal);
-            panel.add(labelJumlah);
-            panel.add(plus);
-            panel.add(minus);
-            add(panel);
-            panel.setVisible(true);
-            
-//            model.addRow(data);
-//            cartItemTable.setRowHeight(20);
         }
-        
+        lbTotalPrice.setText(String.valueOf(total));
     }
     
 
@@ -209,9 +230,18 @@ public class cart extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton7ActionPerformed
 
-    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+    private void btnBayarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBayarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton8ActionPerformed
+        String totalS = lbTotalPrice.getText();
+        totalSemua = totalS;
+        this.dispose();
+        Checkout ck = new Checkout();
+        ck.setVisible(true);
+    }//GEN-LAST:event_btnBayarActionPerformed
+
+    private void cartItemTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cartItemTableMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cartItemTableMouseClicked
 
     /**
      * @param args the command line arguments
@@ -249,13 +279,15 @@ public class cart extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBayar;
     private javax.swing.JTable cartItemTable;
     private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JLabel lbTotalPrice;
     // End of variables declaration//GEN-END:variables
 }

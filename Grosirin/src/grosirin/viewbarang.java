@@ -22,8 +22,8 @@ import javax.swing.JOptionPane;
  * @author Lenovo
  */
 public class viewbarang extends javax.swing.JFrame {
-    public String globalbarang,barang1;
-    public static String namaBarang, total, jumlah,tmtpoto;
+    public String globalbarang, barang1;
+    public static String namaBarang, total, jumlah,tmpPhoto, idBarang;
     Connection con;
     PreparedStatement pst;
     Statement stm;
@@ -34,12 +34,13 @@ public class viewbarang extends javax.swing.JFrame {
      */
     public viewbarang() {
         initComponents();
+        lbIdBarang.setVisible(false);
         
     }
     private void load(){
         String barang = homepage.GlobalBarang;
         try {
-            String sql = "select namabarang,harga,photopath,detail from barang where idbarang = "+barang;
+            String sql = "select idBarang,namabarang,harga,photopath,detail from barang where idbarang = "+barang;
             con = Koneksi.configDB();
             stm = con.createStatement();
             rs = stm.executeQuery(sql);
@@ -50,8 +51,10 @@ public class viewbarang extends javax.swing.JFrame {
                 lbharga.setText (rs.getString("harga"));
                 txtotal.setText(rs.getString("harga"));
                 txdetail.setText(rs.getString("detail"));
-                tmtpoto = rs.getString("photopath");
+                lbIdBarang.setText(rs.getString("idBarang"));
+                tmpPhoto = rs.getString("photopath");
                 barang1 = rs.getString("idBarang");
+                
                 
                 
         }catch (Exception e){
@@ -66,7 +69,7 @@ public class viewbarang extends javax.swing.JFrame {
     }
 
      public void setImage(){
-         Image img = new ImageIcon("src\\image\\barang\\"+tmtpoto).getImage();
+       Image img = new ImageIcon("src\\image\\barang\\"+tmpPhoto).getImage();
        Image imgRsz = img.getScaledInstance(lbgambar.getWidth(), lbgambar.getHeight(), Image.SCALE_DEFAULT);
        ImageIcon logoIcon = new ImageIcon(imgRsz); 
        lbgambar.setIcon(logoIcon);
@@ -110,6 +113,7 @@ public class viewbarang extends javax.swing.JFrame {
         tb3 = new javax.swing.JButton();
         tb4 = new javax.swing.JButton();
         tb5 = new javax.swing.JButton();
+        lbIdBarang = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -270,6 +274,8 @@ public class viewbarang extends javax.swing.JFrame {
             }
         });
 
+        lbIdBarang.setText("jLabel1");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -328,7 +334,10 @@ public class viewbarang extends javax.swing.JFrame {
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addGap(32, 32, 32)
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(lbnama)
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addComponent(lbnama)
+                                                .addGap(171, 171, 171)
+                                                .addComponent(lbIdBarang))
                                             .addGroup(jPanel1Layout.createSequentialGroup()
                                                 .addComponent(jLabel7)
                                                 .addGap(18, 18, 18)
@@ -357,7 +366,9 @@ public class viewbarang extends javax.swing.JFrame {
                     .addComponent(lbgambar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lbIdBarang))
                             .addComponent(lbnama))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -432,10 +443,12 @@ public class viewbarang extends javax.swing.JFrame {
         String barang = lbnama.getText();
         String total1 = txtotal.getText();
         String jumlah1 = txjumlah.getText();
+        String idBarang1 = lbIdBarang.getText();
         namaBarang = barang;
         total = total1;
         jumlah = jumlah1;
-        ProductList p = new ProductList(this.namaBarang, this.jumlah, this.total);
+        idBarang = idBarang1;
+        ProductList p = new ProductList(this.namaBarang, this.jumlah, this.total, this.idBarang);
         cartItem.add(p);
         JOptionPane.showMessageDialog(null,"Berhasil ditambahkan ke cart");
         
@@ -550,6 +563,7 @@ public class viewbarang extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JLabel lbIdBarang;
     private javax.swing.JLabel lbgambar;
     private javax.swing.JLabel lbharga;
     private javax.swing.JLabel lbimage;
