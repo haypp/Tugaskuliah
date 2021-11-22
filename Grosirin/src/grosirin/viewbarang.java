@@ -14,6 +14,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.ImageIcon;
+import java.util.*;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -421,6 +423,10 @@ public class viewbarang extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton15ActionPerformed
 
+    
+    public static ArrayList<ProductList> cartItem = new ArrayList();
+    
+    
     private void btntambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btntambahActionPerformed
         String barang = lbnama.getText();
         String total1 = txtotal.getText();
@@ -428,11 +434,10 @@ public class viewbarang extends javax.swing.JFrame {
         namaBarang = barang;
         total = total1;
         jumlah = jumlah1;
-        System.out.println(namaBarang + total + jumlah);
-        System.out.print(namaBarang);
-        this.dispose();
-        cart hp = new cart();
-        hp.setVisible(true);
+        ProductList p = new ProductList(this.namaBarang, this.jumlah, this.total);
+        cartItem.add(p);
+        JOptionPane.showMessageDialog(null,"Berhasil ditambahkan ke cart");
+        
         // TODO add your handling code here:
     }//GEN-LAST:event_btntambahActionPerformed
 
