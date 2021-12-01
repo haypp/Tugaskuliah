@@ -8,7 +8,7 @@ import javax.swing.JFileChooser;
 
 public class homepage extends javax.swing.JFrame {
         public String barang1,barang2,barang3;
-        public static String GlobalList,GlobalBarang, globalIdUser;
+        public static String GlobalList,GlobalBarang;
         Connection con;
         PreparedStatement pst;
         Statement stm;
@@ -23,8 +23,10 @@ public class homepage extends javax.swing.JFrame {
 
     private void load(){
         try {
-//            globalIdUser = lbIdUser.getText();
-            System.out.print(globalIdUser);
+//            String id = lbIdUser.getText();
+//            globalIdUser = id;
+//            System.out.print(globalIdUser);
+            lbIdUser.setText(LoginPage.globalIdUser);
             String sql = "select namaBarang, harga, photopath,idBarang from barang ORDER BY idbarang ASC LIMIT 3";
             con = Koneksi.configDB();
             stm = con.createStatement();

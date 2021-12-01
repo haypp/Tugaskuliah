@@ -635,6 +635,9 @@ public class RegisterPage extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Berhasil input data");
             String path = new File(".").getCanonicalPath();
             FileUtils.copyFileToDirectory(file, new File(path+"/image"));
+            this.dispose();
+            LoginPage lp = new LoginPage();
+            lp.setVisible(true);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
         }

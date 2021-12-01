@@ -47,6 +47,7 @@ public class viewbarang extends javax.swing.JFrame {
     }
     private void load(){
         String barang = homepage.GlobalBarang;
+        lbIdUser.setText(LoginPage.globalIdUser);
         try {
             String sql = "select idBarang,namabarang,harga,photopath,detail from barang where idbarang = "+barang;
             con = Koneksi.configDB();
@@ -122,6 +123,8 @@ public class viewbarang extends javax.swing.JFrame {
         tb4 = new javax.swing.JButton();
         tb5 = new javax.swing.JButton();
         lbIdBarang = new javax.swing.JLabel();
+        lbIdUser = new javax.swing.JLabel();
+        lbGlobalID = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -283,6 +286,10 @@ public class viewbarang extends javax.swing.JFrame {
 
         lbIdBarang.setText("jLabel1");
 
+        lbIdUser.setText("jLabel1");
+
+        lbGlobalID.setText("jLabel1");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -298,16 +305,6 @@ public class viewbarang extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(83, 83, 83)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(tb1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(106, 106, 106)
-                                .addComponent(tb2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(141, 141, 141)
-                                .addComponent(tb3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(143, 143, 143)
-                                .addComponent(tb4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(100, 100, 100)
-                                .addComponent(tb5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(lbgambar, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(32, 32, 32)
@@ -567,7 +564,9 @@ public class viewbarang extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JLabel lbGlobalID;
     private javax.swing.JLabel lbIdBarang;
+    private javax.swing.JLabel lbIdUser;
     private javax.swing.JLabel lbgambar;
     private javax.swing.JLabel lbharga;
     private javax.swing.JLabel lbimage;

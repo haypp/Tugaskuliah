@@ -16,6 +16,7 @@ import javax.swing.JOptionPane;
  */
 public class LoginPage extends javax.swing.JFrame {
 Connection con;
+public static String globalIdUser;
 PreparedStatement pst;
 Statement stm;
 ResultSet rs;
@@ -183,7 +184,8 @@ ResultSet rs;
                     JOptionPane.showMessageDialog(null, "Berhasil Login");
                     this.dispose();
                     homepage hp = new homepage();
-                    homepage.lbIdUser.setText(id);
+//                    homepage.lbIdUser.setText(id);
+                    globalIdUser = id;
 //                    homepage.lbIdUser.setVisible(false);
                     hp.setVisible(true);
                 }

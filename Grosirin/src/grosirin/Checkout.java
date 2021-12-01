@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -20,6 +21,7 @@ public class Checkout extends javax.swing.JFrame {
     Object data[] = new Object[5];
     String kurir, idKurir;
     int totalAkhir, totalBelanja;
+    String idPenjualan;
     Connection con;
     PreparedStatement pst;
     Statement stm;
@@ -30,12 +32,62 @@ public class Checkout extends javax.swing.JFrame {
     public Checkout() {
         initComponents();
         load();
+        showAlamatUser();
+    }
+    
+    public void showAlamatUser()
+    {
+        String sql = "select * from user where idUser="+LoginPage.globalIdUser;
+        try {
+            con = Koneksi.configDB();
+            stm = con.createStatement();
+            rs = stm.executeQuery(sql);
+            if (rs.next())
+            {
+                lbAlamat.setText(rs.getString("alamat"));
+            }
+            
+        } catch (Exception e) {
+        }
+    }
+    
+    public void insertCart()
+    {
+        String sql2 = "select * from penjualan ORDER BY idPenjualan DESC LIMIT 1";
+        String sql1 = "insert into detail_penjualan(idPenjualan, idBarang, jumlah, subTotal) values(?,?,?,?)";
+        
+        try {
+            con = Koneksi.configDB();
+            stm = con.createStatement();
+            rs = stm.executeQuery(sql2);
+            if (rs.next())
+            {
+                idPenjualan = rs.getString("idPenjualan");
+            }
+        } catch (Exception e) {
+        }
+        
+        
+        for (int i = 0; i < viewbarang.cartItem.size(); i++)
+        {
+            try {
+                con = Koneksi.configDB();
+                pst = con.prepareStatement(sql1);
+                pst.setString(1, idPenjualan);
+                pst.setString(2, viewbarang.cartItem.get(i).getIdBarang());
+                pst.setString(3, viewbarang.cartItem.get(i).getJumlah());
+                pst.setString(4, viewbarang.cartItem.get(i).getTotal());
+                pst.executeUpdate();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+        }
     }
     
     
     public void load()
     {
-        
+        String id = LoginPage.globalIdUser;
         String sql = "select * from kurir Order by idKurir ASC Limit 4";
         try {
             con = Koneksi.configDB();
@@ -63,6 +115,7 @@ public class Checkout extends javax.swing.JFrame {
             
         } catch (Exception e) {
         }
+        
         
         
         for (int i = 0; i < viewbarang.cartItem.size(); i++)
@@ -105,12 +158,12 @@ public class Checkout extends javax.swing.JFrame {
         lbTotal = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jButton7 = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
         rdBtn1 = new javax.swing.JRadioButton();
         rdBtn2 = new javax.swing.JRadioButton();
         rdBtn3 = new javax.swing.JRadioButton();
         rdBtn4 = new javax.swing.JRadioButton();
+        btnBayar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -156,7 +209,6 @@ public class Checkout extends javax.swing.JFrame {
         lbPengiriman.setText("Total Belanja  ");
 
         lbTotal.setFont(new java.awt.Font("Tahoma", 1, 26)); // NOI18N
-        lbTotal.setText("k");
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 26)); // NOI18N
         jLabel8.setText("TOTAL");
@@ -169,14 +221,6 @@ public class Checkout extends javax.swing.JFrame {
             }
         });
 
-        jButton8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton8.setText("BAYAR");
-        jButton8.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton8ActionPerformed(evt);
-            }
-        });
-
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 26)); // NOI18N
         jLabel9.setText("Rp. ");
 
@@ -184,6 +228,11 @@ public class Checkout extends javax.swing.JFrame {
         rdBtn1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 rdBtn1MouseClicked(evt);
+            }
+        });
+        rdBtn1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdBtn1ActionPerformed(evt);
             }
         });
 
@@ -205,6 +254,14 @@ public class Checkout extends javax.swing.JFrame {
         rdBtn4.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 rdBtn4MouseClicked(evt);
+            }
+        });
+
+        btnBayar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnBayar.setText("BAYAR");
+        btnBayar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBayarActionPerformed(evt);
             }
         });
 
@@ -245,30 +302,25 @@ public class Checkout extends javax.swing.JFrame {
                             .addComponent(lbAlamat, javax.swing.GroupLayout.PREFERRED_SIZE, 678, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jLabel5)
                         .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jLabel5)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jLabel6)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(lbBelanja, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jLabel7)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(lbPengiriman, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addGap(28, 28, 28))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                            .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(123, 123, 123)))
+                            .addComponent(jLabel6)
+                            .addGap(18, 18, 18)
+                            .addComponent(lbBelanja, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(jLabel7)
+                            .addGap(18, 18, 18)
+                            .addComponent(lbPengiriman, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jLabel8)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel8)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel9)
-                                .addGap(18, 18, 18)
-                                .addComponent(lbTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(59, 59, 59))))
+                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lbTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(btnBayar, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(28, 28, 28))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -299,7 +351,7 @@ public class Checkout extends javax.swing.JFrame {
                 .addComponent(jLabel8)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbTotal)
+                    .addComponent(lbTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9))
                 .addGap(90, 90, 90)
                 .addComponent(jLabel4)
@@ -311,8 +363,8 @@ public class Checkout extends javax.swing.JFrame {
                     .addComponent(rdBtn4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 82, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBayar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(38, 38, 38))
         );
 
@@ -338,16 +390,16 @@ public class Checkout extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton7ActionPerformed
 
-    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton8ActionPerformed
-
     private void rdBtn1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rdBtn1MouseClicked
         // TODO add your handling code here:
        lbPengiriman.setText("20000");
        String jntTarif = lbPengiriman.getText();
        totalAkhir = Integer.parseInt(jntTarif) + totalBelanja;
        lbTotal.setText(String.valueOf(totalAkhir));
+       if (rdBtn1.isSelected())
+       {
+           idKurir = "1";
+       }
     }//GEN-LAST:event_rdBtn1MouseClicked
 
     private void rdBtn2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rdBtn2MouseClicked
@@ -356,6 +408,10 @@ public class Checkout extends javax.swing.JFrame {
         String jneTarif = lbPengiriman.getText();
         totalAkhir = Integer.parseInt(jneTarif) + totalBelanja;
         lbTotal.setText(String.valueOf(totalAkhir));
+        if (rdBtn2.isSelected())
+       {
+           idKurir = "2";
+       }
     }//GEN-LAST:event_rdBtn2MouseClicked
 
     private void rdBtn3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rdBtn3MouseClicked
@@ -364,6 +420,10 @@ public class Checkout extends javax.swing.JFrame {
         String tikiTarif = lbPengiriman.getText();
         totalAkhir = Integer.parseInt(tikiTarif) + totalBelanja;
         lbTotal.setText(String.valueOf(totalAkhir));
+        if (rdBtn3.isSelected())
+       {
+           idKurir = "3";
+       }
     }//GEN-LAST:event_rdBtn3MouseClicked
 
     private void rdBtn4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rdBtn4MouseClicked
@@ -372,7 +432,38 @@ public class Checkout extends javax.swing.JFrame {
         String sicepatTarif = lbPengiriman.getText();
         totalAkhir = Integer.parseInt(sicepatTarif) + totalBelanja;
         lbTotal.setText(String.valueOf(totalAkhir));
+        if (rdBtn4.isSelected())
+       {
+           idKurir = "4";
+       }
     }//GEN-LAST:event_rdBtn4MouseClicked
+
+    private void rdBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdBtn1ActionPerformed
+        // TODO add your handling code here:
+//       lbPengiriman.setText("20000");
+//       String jntTarif = lbPengiriman.getText();
+//       totalAkhir = Integer.parseInt(jntTarif) + totalBelanja;
+//       lbTotal.setText(String.valueOf(totalAkhir));
+    }//GEN-LAST:event_rdBtn1ActionPerformed
+
+    private void btnBayarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBayarActionPerformed
+        // TODO add your handling code here:
+        String sql = "insert into penjualan(idUser, idKurir, Total) values(?,?,?)";
+        try {
+            con = Koneksi.configDB();
+            pst = con.prepareStatement(sql);
+            pst.setString(1, LoginPage.globalIdUser);
+            pst.setString(2, idKurir);
+            pst.setInt(3, totalAkhir);
+            pst.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Berhasil Melakukan Pembayaran");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+        
+        insertCart();
+        
+    }//GEN-LAST:event_btnBayarActionPerformed
     public void setIconImage()
     {
        Image img = new ImageIcon("src\\image\\iconlogo.png").getImage();
@@ -417,9 +508,9 @@ public class Checkout extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup Kurir;
+    private javax.swing.JButton btnBayar;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
