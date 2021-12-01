@@ -704,12 +704,12 @@ ResultSet rs;
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
          try {
-        String jrxmlFile = "./src/report/pembelian.jrxml";
-	con = Koneksi.configDB();
-	HashMap param =new HashMap();
-	JasperReport jspr = JasperCompileManager.compileReport(jrxmlFile);
-	JasperPrint JPrint = JasperFillManager.fillReport(jspr, param, con);
-	JasperViewer.viewReport(JPrint, false);
+            String jrxmlFile = "src/report/pembelian.jrxml";
+            con = Koneksi.configDB();
+            HashMap param = new HashMap();
+            JasperReport jspr = JasperCompileManager.compileReport(jrxmlFile);
+            JasperPrint JPrint = JasperFillManager.fillReport(jspr, param, con);
+            JasperViewer.viewReport(JPrint, false);
         } catch(Exception e) {
             JOptionPane.showMessageDialog(rootPane, e);
         }
@@ -718,12 +718,12 @@ ResultSet rs;
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
      try {
-        String jrxmlFile = "./src/report/penjualan.jrxml";
-	con = Koneksi.configDB();
-	HashMap param =new HashMap();
-	JasperReport jspr = JasperCompileManager.compileReport(jrxmlFile);
-	JasperPrint JPrint = JasperFillManager.fillReport(jspr, param, con);
-	JasperViewer.viewReport(JPrint, false);
+            String jrxmlFile = "src/report/penjualan.jrxml";
+            con = Koneksi.configDB();
+            HashMap param = new HashMap();
+            JasperReport jspr = JasperCompileManager.compileReport(jrxmlFile);
+            JasperPrint JPrint = JasperFillManager.fillReport(jspr, param, con);
+            JasperViewer.viewReport(JPrint, false);
         } catch(Exception e) {
             JOptionPane.showMessageDialog(rootPane, e);
         }
