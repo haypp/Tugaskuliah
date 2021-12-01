@@ -9,6 +9,12 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDateTime; 
+import java.util.HashMap;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.view.JasperViewer;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -26,6 +32,7 @@ String IdGlobal = "4";
 PreparedStatement pst;
 Statement stm;
 ResultSet rs;
+
     /**
      * Creates new form desain
      */
@@ -316,8 +323,18 @@ ResultSet rs;
         jLabel3.setText("Penjualan");
 
         jButton4.setText("Cetak");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jButton5.setText("Cetak");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(153, 153, 255));
 
@@ -648,6 +665,11 @@ ResultSet rs;
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
         setIconImage();
+        load_table();
+        load_table_penjualan();
+        set_date();
+        set_nama();
+        load_table_stok();
         // TODO add your handling code here:
     }//GEN-LAST:event_formWindowActivated
 
@@ -679,6 +701,34 @@ ResultSet rs;
         }
         
     }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+         try {
+        String jrxmlFile = "./src/report/pembelian.jrxml";
+	con = Koneksi.configDB();
+	HashMap param =new HashMap();
+	JasperReport jspr = JasperCompileManager.compileReport(jrxmlFile);
+	JasperPrint JPrint = JasperFillManager.fillReport(jspr, param, con);
+	JasperViewer.viewReport(JPrint, false);
+        } catch(Exception e) {
+            JOptionPane.showMessageDialog(rootPane, e);
+        }
+            // TODO add your handling code here:
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+     try {
+        String jrxmlFile = "./src/report/penjualan.jrxml";
+	con = Koneksi.configDB();
+	HashMap param =new HashMap();
+	JasperReport jspr = JasperCompileManager.compileReport(jrxmlFile);
+	JasperPrint JPrint = JasperFillManager.fillReport(jspr, param, con);
+	JasperViewer.viewReport(JPrint, false);
+        } catch(Exception e) {
+            JOptionPane.showMessageDialog(rootPane, e);
+        }
+// TODO add your handling code here:
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
      * @param args the command line arguments
